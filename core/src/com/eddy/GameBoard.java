@@ -50,8 +50,8 @@ public class GameBoard {
             if (firstClick) {
                 firstClick = false;
                 placeBombs(rowClicked,colClicked);
+                initBoardNumbers();
             }
-            getNeighbors(rowClicked,colClicked);
         }
     }
 
@@ -72,6 +72,17 @@ public class GameBoard {
         }
     }
 
+    private void initBoardNumbers() {
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[row].length; col++) {
+                if (board[row][col] % 10 != BOMB) {
+                    int numOfBombs = bombsAroundLoc(row,col);
+                    board[row][col] = numOfBombs + 10;
+                }
+            }
+        }
+    }
+
     //3-8 Location array use is validloc
     private ArrayList<Location> getNeighbors(int row, int col) {
         ArrayList<Location> neighbors = new ArrayList<>();
@@ -81,15 +92,32 @@ public class GameBoard {
                 Location currentNeighbor = new Location(i,j);
                 if (isValidLoc(i,j)) {
                     neighbors.add(currentNeighbor);
-                    System.out.print("Current Neighbor " + currentNeighbor);
-                    System.out.println();
+                    // TEST //System.out.print("Current Neighbor " + currentNeighbor);
+                    //System.out.println();
                 }
             }
         }
-        System.out.println();
-        System.out.println();
+        //System.out.println();
+        //System.out.println();
 
         return neighbors;
+    }
+
+    private int bombsAroundLoc(int row, int col) {
+        ArrayList<Location> locs = getNeighbors(row,col);
+        //System.out.println("[ "+row+" ] " + "[ " + col + " ]");
+        //System.out.println(locs);
+
+        int count = 0;
+        for (Location temp : locs) {
+            if (board[temp.getRow()][temp.getColumn()] % 10 == BOMB) {
+                count++;
+            }
+        }
+        //System.out.println("bombs found: " + count);
+        //ystem.out.println();
+        return count;
+
     }
 
 
@@ -103,6 +131,30 @@ public class GameBoard {
                 }
                 else if (board[row][col] == BOMB) {
                     spriteBatch.draw(bomb, (10) + (col * 25) ,  (600-35) - (row * 25));
+                }
+                else if (board[row][col] == 1) {
+                    spriteBatch.draw(oneTile, (10) + (col * 25) ,  (600-35) - (row * 25));
+                }
+                else if (board[row][col] == 2) {
+                    spriteBatch.draw(twoTile, (10) + (col * 25) ,  (600-35) - (row * 25));
+                }
+                else if (board[row][col] == 3) {
+                    spriteBatch.draw(threeTile, (10) + (col * 25) ,  (600-35) - (row * 25));
+                }
+                else if (board[row][col] == 4) {
+                    spriteBatch.draw(fourTile, (10) + (col * 25) ,  (600-35) - (row * 25));
+                }
+                else if (board[row][col] == 5) {
+                    spriteBatch.draw(fiveTile, (10) + (col * 25) ,  (600-35) - (row * 25));
+                }
+                else if (board[row][col] == 6) {
+                    spriteBatch.draw(sixTile, (10) + (col * 25) ,  (600-35) - (row * 25));
+                }
+                else if (board[row][col] == 7) {
+                    spriteBatch.draw(sevenTile, (10) + (col * 25) ,  (600-35) - (row * 25));
+                }
+                else if (board[row][col] == 8) {
+                    spriteBatch.draw(eightTile, (10) + (col * 25) ,  (600-35) - (row * 25));
                 }
             }
         }
