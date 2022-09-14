@@ -12,6 +12,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import javax.swing.*;
+import java.sql.Time;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class GameScreen implements Screen{
 
     private static final float WORLD_WIDTH = 800;
@@ -41,6 +47,9 @@ public class GameScreen implements Screen{
     //(x,y) of last mouse click
     private int mouseX = -10;
     private int mouseY = -10;
+
+    private int mouseRightX = -10;
+    private int mouseRightY = -10;
 
     //create temp ugly font
     BitmapFont tempFont = new BitmapFont();
@@ -75,6 +84,12 @@ public class GameScreen implements Screen{
             mouseY = Gdx.input.getY();
             board.handleClick(mouseX,mouseY);
         }
+        //if right mouse button clicked
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
+            mouseRightX = Gdx.input.getX();
+            mouseRightY = Gdx.input.getY();
+            board.handleRightClick(mouseRightX,mouseRightY);
+        }
     }
 
     @Override
@@ -88,8 +103,11 @@ public class GameScreen implements Screen{
         //A.I. updates
 
         //all texture drawing must happen between begin() and end()
+
+
         spriteBatch.begin();
         board.draw(spriteBatch);
+        //tempFont.draw(spriteBatch,"Timer seconds: " +)
         tempFont.draw(spriteBatch, "Clicked at (" + mouseX + "," + mouseY + ")", 400, 100);
         tempFont.draw(spriteBatch, "row : " + (mouseY-10)/25, 400, 80);
         tempFont.draw(spriteBatch, "Col :" + (mouseX-10)/25, 400, 60);
@@ -100,6 +118,7 @@ public class GameScreen implements Screen{
     public void resize(int width, int height) {
         viewport.update(width,height);
     }
+
 
     @Override
     public void pause() {
