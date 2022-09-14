@@ -78,9 +78,7 @@ public class GameBoard { ////MAKE: If click on bomb tile reveal all bomb tiles +
             if (board[rowClicked][colClicked] == FLAGGEDTILE) {
                 board[rowClicked][colClicked] = EMPTYTILE;
             }
-            else {
-                board[rowClicked][colClicked] = FLAGGEDTILE;
-            }
+            board[rowClicked][colClicked] = FLAGGEDTILE;
         }
 
     }
@@ -219,6 +217,9 @@ public class GameBoard { ////MAKE: If click on bomb tile reveal all bomb tiles +
                 }
                 else if (board[row][col] == BOMB) {
                     spriteBatch.draw(bomb, (10) + (col * 25) ,  (600-35) - (row * 25));
+                }
+                else if (board[row][col] == 0) {
+                    spriteBatch.draw(emptyFloor, (10) + (col * 25) ,  (600-35) - (row * 25));
                 }
                 else if (board[row][col] == 1) {
                     spriteBatch.draw(oneTile, (10) + (col * 25) ,  (600-35) - (row * 25));
